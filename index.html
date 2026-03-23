@@ -46,7 +46,6 @@
         .cart-trigger { background: none; border: none; color: var(--texto-secundario); cursor: pointer; font-size: 12px; padding: 10px; transition: color 0.3s;}
         .cart-trigger span.badge { color: var(--rojo-mrd); font-weight: 700; }
 
-        /* HERO */
         .main-title {
             text-align: center; font-size: clamp(32px, 8vw, 44px); font-weight: 700; letter-spacing: -1.2px; margin: 50px 0 30px;
             background: linear-gradient(180deg, #fff 0%, #86868b 100%);
@@ -60,7 +59,7 @@
             gap: 20px; 
         }
 
-        /* PRODUCT CARD & IMAGE BORDER */
+        /* PRODUCT CARD */
         .product-card {
             background: #161617; 
             border-radius: 18px; 
@@ -71,79 +70,54 @@
         }
         .product-card:hover { transform: translateY(-4px); }
 
+        /* GALLERY CON CONTROLES */
         .gallery {
             position: relative; width: 100%; height: 300px; 
             display: flex; align-items: center; justify-content: center;
-            padding: 20px; cursor: zoom-in;
+            padding: 20px;
         }
 
-        /* Estilo de borde bonito para la imagen */
         .gallery img { 
-            max-width: 100%; 
-            max-height: 100%; 
-            object-fit: contain; 
+            max-width: 100%; max-height: 100%; object-fit: contain; 
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Sombra para dar profundidad */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             background: linear-gradient(145deg, #1e1e1f, #161617);
+            transition: opacity 0.3s ease;
         }
+
+        /* Botones de navegación */
+        .nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1); color: white;
+            border: none; width: 34px; height: 34px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            backdrop-filter: blur(10px); z-index: 10; opacity: 0;
+            transition: all 0.3s ease; font-weight: bold;
+        }
+        .product-card:hover .nav-btn { opacity: 1; }
+        .nav-btn:hover { background: rgba(255, 255, 255, 0.3); }
+        .prev { left: 10px; }
+        .next { right: 10px; }
 
         .info { padding: 15px 25px 25px; text-align: center; }
         .info h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #f5f5f7; }
 
-        /* PRECIO REDISEÑADO */
         .price { margin-bottom: 15px; }
         .price .currency { font-size: 12px; color: var(--texto-secundario); vertical-align: super; }
         .price .amount { font-size: 24px; font-weight: 500; color: #fff; }
-        .price .decimal { font-size: 12px; color: var(--texto-secundario); vertical-align: super; }
 
         .btn-add {
             background: #0071e3; border: none; color: #fff; 
             padding: 8px 20px; border-radius: 20px; 
             cursor: pointer; font-weight: 400; font-size: 13px;
-            transition: opacity 0.2s;
-        }
-        .btn-add:hover { opacity: 0.8; }
-
-        /* FOOTER COMPACTO */
-        footer {
-            background: #000;
-            padding: 30px 5%;
-            color: var(--texto-footer);
-            font-size: 11px;
-            border-top: 1px solid #1d1d1f;
+            transition: opacity 0.2s; width: 100%;
         }
 
-        .footer-compact {
-            max-width: 980px;
-            margin: 0 auto;
-            text-align: center;
-        }
+        /* FOOTER */
+        footer { background: #000; padding: 30px 5%; color: var(--texto-footer); font-size: 11px; border-top: 1px solid #1d1d1f; text-align: center; }
 
-        .footer-links {
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links span {
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .footer-links span:hover { color: #fff; }
-
-        .footer-copy {
-            padding-top: 15px;
-            border-top: 1px solid #1d1d1f;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* LIGHTBOX & CART */
+        /* CART PANEL */
         #cart-panel {
             position: fixed; top: 0; right: -100%; width: 100%; max-width: 380px; height: 100%;
             background: rgba(22, 22, 23, 0.98); backdrop-filter: blur(20px); z-index: 10000; padding: 30px; 
@@ -152,12 +126,10 @@
         #cart-panel.active { right: 0; }
         #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; z-index: 9999; }
         
-        .btn-checkout { background: #0071e3; color: white; border: none; width: 100%; padding: 12px; border-radius: 10px; cursor: pointer; font-size: 14px; }
         .hidden { display: none !important; }
 
         @media (max-width: 600px) {
-            .footer-copy { flex-direction: column; gap: 10px; }
-            .container { padding: 0 20px 60px; }
+            .nav-btn { opacity: 1; width: 40px; height: 40px; } /* Más grandes en móvil */
         }
     </style>
 </head>
@@ -176,24 +148,11 @@
     <main class="container" id="product-grid"></main>
 
     <footer>
-        <div class="footer-compact">
-            <div class="footer-links">
-                <span>Gorras</span>
-                <span>T-Shirts</span>
-                <span>Soporte</span>
-                <span>Privacidad</span>
-                <span>Términos</span>
-            </div>
-            <div class="footer-copy">
-                <div>Copyright © 2026 MRD Store.</div>
-                <div style="color: #424245;">Santiago, República Dominicana</div>
-            </div>
+        <div class="footer-links" style="margin-bottom:15px; display:flex; justify-content:center; gap:15px;">
+            <span>Colección 2026</span> • <span>Envíos Nacionales</span>
         </div>
+        <p>Copyright © 2026 MRD Store. Santiago, RD.</p>
     </footer>
-
-    <div id="lightbox" onclick="closeImage()" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 20000; display: none; align-items: center; justify-content: center;">
-        <img id="lightbox-img" src="" style="max-width: 90%; max-height: 80%; border-radius: 10px;">
-    </div>
 
     <div id="overlay" onclick="toggleCart()"></div>
 
@@ -208,55 +167,104 @@
                 <p style="display: flex; justify-content: space-between; margin: 20px 0; border-top: 1px solid #333; padding-top: 15px;">
                     Total: <span id="total-price" style="font-weight:600; color:#fff;">$0</span>
                 </p>
-                <button class="btn-checkout" onclick="goToCheckout()">Continuar</button>
+                <button class="btn-add" onclick="goToCheckout()">Pagar ahora</button>
             </div>
             <div id="empty-msg" style="text-align:center; color:#6e6e73; margin-top:40px;">Bolsa vacía.</div>
         </div>
         <div id="view-2" class="hidden">
             <input type="text" id="u_name" placeholder="Nombre" style="width:100%; padding:12px; margin-bottom:10px; background:#1c1c1e; border:1px solid #333; color:#fff; border-radius:8px;">
-            <input type="text" id="u_addr" placeholder="Dirección" style="width:100%; padding:12px; margin-bottom:10px; background:#1c1c1e; border:1px solid #333; color:#fff; border-radius:8px;">
             <input type="tel" id="u_tel" placeholder="WhatsApp" style="width:100%; padding:12px; margin-bottom:20px; background:#1c1c1e; border:1px solid #333; color:#fff; border-radius:8px;">
-            <button id="final-btn" class="btn-checkout" onclick="finalizar()">Confirmar</button>
+            <button id="final-btn" class="btn-add" onclick="finalizar()">Confirmar pedido</button>
         </div>
     </aside>
 
     <script>
         emailjs.init("FTKOePl9p5Jhd8ycX");
 
+        // Base de datos actualizada con múltiples imágenes por producto
         const db = [
-            { id: 1, name: "Gorra Cobrador Pro", price: 800, img: "https://res.cloudinary.com/nox-company/image/upload/v1774219703/rescate%20democratico%20pagina/Gemini_Generated_Image_hjixyuhjixyuhjix_sddstf.png" },
-            { id: 2, name: "T-Shirt El Cobrador", price: 1400, img: "https://res.cloudinary.com/nox-company/image/upload/v1774219708/rescate%20democratico%20pagina/Gemini_Generated_Image_wowulbwowulbwowu_ffrj3w.png" },
-            { id: 3, name: "T-Shirt Diseño Pro", price: 2000, img: "https://res.cloudinary.com/nox-company/image/upload/v1774220620/rescate%20democratico%20pagina/Gemini_Generated_Image_ba3fufba3fufba3f_nxh9cs.png" },
-            { id: 4, name: "T-Shirt Cuello Formal", price: 1000, img: "https://res.cloudinary.com/nox-company/image/upload/v1774219707/rescate%20democratico%20pagina/Gemini_Generated_Image_12qwdv12qwdv12qw_vruccv.png" },
+            { 
+                id: 1, 
+                name: "Gorra Cobrador Pro", 
+                price: 800, 
+                images: [
+                    "https://res.cloudinary.com/nox-company/image/upload/v1774219703/rescate%20democratico%20pagina/Gemini_Generated_Image_hjixyuhjixyuhjix_sddstf.png",
+                    "https://res.cloudinary.com/nox-company/image/upload/v1774219707/rescate%20democratico%20pagina/Gemini_Generated_Image_12qwdv12qwdv12qw_vruccv.png"
+                ],
+                currentIdx: 0
+            },
+            { 
+                id: 2, 
+                name: "T-Shirt El Cobrador", 
+                price: 1400, 
+                images: [
+                    "https://res.cloudinary.com/nox-company/image/upload/v1774219708/rescate%20democratico%20pagina/Gemini_Generated_Image_wowulbwowulbwowu_ffrj3w.png",
+                    "https://res.cloudinary.com/nox-company/image/upload/v1774219703/rescate%20democratico%20pagina/Gemini_Generated_Image_h4bzaoh4bzaoh4bz_ogrwaz.png"
+                ],
+                currentIdx: 0
+            },
+            { 
+                id: 3, 
+                name: "T-Shirt Diseño Pro", 
+                price: 2000, 
+                images: [
+                    "https://res.cloudinary.com/nox-company/image/upload/v1774220620/rescate%20democratico%20pagina/Gemini_Generated_Image_ba3fufba3fufba3f_nxh9cs.png",
+                    "https://res.cloudinary.com/nox-company/image/upload/v1774225641/rescate%20democratico%20pagina/Captura_de_Pantalla_2026-03-22_a_la_s_8.27.04_p.m._oqy0yx.png"
+                ],
+                currentIdx: 0
+            },
+            { 
+                id: 4, 
+                name: "T-Shirt Cuello Formal", 
+                price: 1000, 
+                images: [
+                    "https://res.cloudinary.com/nox-company/image/upload/v1774219707/rescate%20democratico%20pagina/Gemini_Generated_Image_12qwdv12qwdv12qw_vruccv.png",
+                    "https://res.cloudinary.com/nox-company/image/upload/v1774225641/rescate%20democratico%20pagina/Captura_de_Pantalla_2026-03-22_a_la_s_8.27.04_p.m._oqy0yx.png"
+                ],
+                currentIdx: 0
+            }
         ];
 
         let cart = [];
 
         function render() {
             const grid = document.getElementById('product-grid');
+            grid.innerHTML = ""; // Limpiar antes de re-renderizar
             db.forEach(p => {
                 grid.innerHTML += `
                     <div class="product-card">
-                        <div class="gallery" onclick="openImage('${p.img}')"><img src="${p.img}" alt="${p.name}"></div>
+                        <div class="gallery">
+                            <button class="nav-btn prev" onclick="changeImg(${p.id}, -1)">&#10094;</button>
+                            <img src="${p.images[p.currentIdx]}" id="img-${p.id}" alt="${p.name}">
+                            <button class="nav-btn next" onclick="changeImg(${p.id}, 1)">&#10095;</button>
+                        </div>
                         <div class="info">
                             <h3>${p.name}</h3>
                             <div class="price">
-                                <span class="currency">RD$</span><span class="amount">${p.price.toLocaleString()}</span><span class="decimal">.00</span>
+                                <span class="currency">RD$</span><span class="amount">${p.price.toLocaleString()}</span>
                             </div>
-                            <button class="btn-add" onclick="add(${p.id})">Añadir</button>
+                            <button class="btn-add" onclick="add(${p.id})">Añadir a la bolsa</button>
                         </div>
                     </div>
                 `;
             });
         }
 
-        function openImage(url) {
-            document.getElementById('lightbox-img').src = url;
-            document.getElementById('lightbox').style.display = 'flex';
-        }
-
-        function closeImage() {
-            document.getElementById('lightbox').style.display = 'none';
+        function changeImg(productId, step) {
+            const product = db.find(p => p.id === productId);
+            const imgElement = document.getElementById(`img-${productId}`);
+            
+            // Animación sutil de salida
+            imgElement.style.opacity = "0.3";
+            
+            setTimeout(() => {
+                product.currentIdx += step;
+                if (product.currentIdx >= product.images.length) product.currentIdx = 0;
+                if (product.currentIdx < 0) product.currentIdx = product.images.length - 1;
+                
+                imgElement.src = product.images[product.currentIdx];
+                imgElement.style.opacity = "1";
+            }, 150);
         }
 
         function toggleCart() {
@@ -294,18 +302,18 @@
 
         function finalizar() {
             const n = document.getElementById('u_name').value;
-            const a = document.getElementById('u_addr').value;
             const t = document.getElementById('u_tel').value;
-            if(!n || !a || !t) return alert("Completa tus datos.");
+            if(!n || !t) return alert("Por favor completa los datos.");
+            
             const btn = document.getElementById('final-btn');
             btn.innerText = "Enviando..."; btn.disabled = true;
             
-            const params = { nombre: n, direccion: a, telefono: t, productos: cart.map(i => i.name).join(", "), total: document.getElementById('total-price').innerText };
+            const params = { nombre: n, telefono: t, productos: cart.map(i => i.name).join(", "), total: document.getElementById('total-price').innerText };
 
             emailjs.send("service_20iosku", "template_65ewyu8", params).then(() => {
-                alert("✅ Pedido enviado.");
+                alert("✅ Pedido enviado correctamente.");
                 cart = []; updateCart(); toggleCart(); backToItems();
-                btn.disabled = false; btn.innerText = "Confirmar";
+                btn.disabled = false; btn.innerText = "Confirmar pedido";
             });
         }
 
