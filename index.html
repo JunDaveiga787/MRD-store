@@ -2,21 +2,22 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MRD Store | Tienda oficial</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         :root {
             --bg-puro: #000000;
-            --bg-deep: #101012; 
+            --bg-deep: #0a0a0b; 
             --rojo-mrd: #E3342F;
             --texto-primario: #ffffff;
             --texto-secundario: #a1a1a6;
+            --texto-footer: #6e6e73;
             --font-main: 'Inter', sans-serif;
         }
 
@@ -30,76 +31,134 @@
             overflow-x: hidden;
         }
 
-        /* --- NAVEGACIÓN --- */
+        /* NAVIGATION */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; height: 65px;
-            background: rgba(0, 0, 0, 0.85); backdrop-filter: saturate(180%) blur(20px);
-            position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #1d1d1f;
+            padding: 0 5%; height: 48px;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: saturate(180%) blur(20px);
+            position: sticky; top: 0; z-index: 9999; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         
-        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 10px; }
-        .nav-logo-img { height: 45px; width: auto; object-fit: contain; transition: 0.3s; }
-        .logo-container h4 { color: white; font-family: "Montserrat", sans-serif; font-size: 14px; letter-spacing: 1px; text-transform: uppercase; }
+        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 8px; }
+        .nav-logo-img { height: 28px; width: auto; }
+        .logo-container h4 { color: white; font-family: "Montserrat", sans-serif; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
 
-        .cart-trigger { background: none; border: none; color: var(--texto-secundario); cursor: pointer; font-size: 13px; font-weight: 500; }
-        .cart-trigger span.badge { color: var(--rojo-mrd); font-weight: 700; margin-left: 4px; }
+        .cart-trigger { background: none; border: none; color: var(--texto-secundario); cursor: pointer; font-size: 12px; padding: 10px; transition: color 0.3s;}
+        .cart-trigger span.badge { color: var(--rojo-mrd); font-weight: 700; }
 
-        /* --- TÍTULO PRINCIPAL --- */
+        /* HERO */
         .main-title {
-            text-align: center; font-size: 38px; font-weight: 800; letter-spacing: -1px; margin-top: 40px;
-            background: linear-gradient(180deg, #fff 0%, #a1a1a6 100%);
+            text-align: center; font-size: clamp(32px, 8vw, 44px); font-weight: 700; letter-spacing: -1.2px; margin: 50px 0 30px;
+            background: linear-gradient(180deg, #fff 0%, #86868b 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        /* --- GRID PRODUCTOS --- */
         .container { 
-            padding: 30px 5% 80px; 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; 
+            padding: 0 5% 80px; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; 
         }
 
+        /* PRODUCT CARD & IMAGE BORDER */
         .product-card {
-            background: rgba(28, 28, 30, 0.4); border: 1px solid rgba(255,255,255,0.03);
-            border-radius: 20px; overflow: hidden; transition: 0.4s ease; display: flex; flex-direction: column;
+            background: #161617; 
+            border-radius: 18px; 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .product-card:hover { transform: translateY(-5px); background: rgba(44, 44, 46, 0.5); border-color: rgba(255,255,255,0.1); }
+        .product-card:hover { transform: translateY(-4px); }
 
         .gallery {
-            position: relative; width: 100%; height: 260px; 
+            position: relative; width: 100%; height: 300px; 
             display: flex; align-items: center; justify-content: center;
-            padding: 15px; background: rgba(0,0,0,0.2);
+            padding: 20px; cursor: zoom-in;
         }
-        .gallery img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 12px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.4)); }
-        
-        .info { padding: 20px; text-align: center; }
-        .info h3 { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
-        .price { color: var(--texto-secundario); font-size: 12px; margin-bottom: 15px; }
-        .price span { color: #fff; font-weight: 700; font-size: 18px; display: block; margin-top: 4px; }
+
+        /* Estilo de borde bonito para la imagen */
+        .gallery img { 
+            max-width: 100%; 
+            max-height: 100%; 
+            object-fit: contain; 
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Borde sutil */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Sombra para dar profundidad */
+            background: linear-gradient(145deg, #1e1e1f, #161617);
+        }
+
+        .info { padding: 15px 25px 25px; text-align: center; }
+        .info h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #f5f5f7; }
+
+        /* PRECIO REDISEÑADO */
+        .price { margin-bottom: 15px; }
+        .price .currency { font-size: 12px; color: var(--texto-secundario); vertical-align: super; }
+        .price .amount { font-size: 24px; font-weight: 500; color: #fff; }
+        .price .decimal { font-size: 12px; color: var(--texto-secundario); vertical-align: super; }
 
         .btn-add {
-            background: #fff; border: none; color: #000; width: 100%; padding: 12px; border-radius: 12px; 
-            cursor: pointer; font-weight: 700; font-size: 12px; transition: 0.3s;
+            background: #0071e3; border: none; color: #fff; 
+            padding: 8px 20px; border-radius: 20px; 
+            cursor: pointer; font-weight: 400; font-size: 13px;
+            transition: opacity 0.2s;
         }
-        .btn-add:hover { transform: scale(1.02); background: #f0f0f0; }
+        .btn-add:hover { opacity: 0.8; }
 
-        /* --- PANEL CARRITO --- */
+        /* FOOTER COMPACTO */
+        footer {
+            background: #000;
+            padding: 30px 5%;
+            color: var(--texto-footer);
+            font-size: 11px;
+            border-top: 1px solid #1d1d1f;
+        }
+
+        .footer-compact {
+            max-width: 980px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-links {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links span {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .footer-links span:hover { color: #fff; }
+
+        .footer-copy {
+            padding-top: 15px;
+            border-top: 1px solid #1d1d1f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* LIGHTBOX & CART */
         #cart-panel {
-            position: fixed; top: 0; right: -100%; width: 350px; height: 100%;
-            background: rgba(15, 15, 15, 0.98); backdrop-filter: blur(30px);
-            z-index: 1001; padding: 40px 25px; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            border-left: 1px solid rgba(255,255,255,0.05);
+            position: fixed; top: 0; right: -100%; width: 100%; max-width: 380px; height: 100%;
+            background: rgba(22, 22, 23, 0.98); backdrop-filter: blur(20px); z-index: 10000; padding: 30px; 
+            transition: right 0.4s ease;
         }
         #cart-panel.active { right: 0; }
-        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; z-index: 1000; }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; z-index: 9999; }
         
-        .cart-item { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 14px; border-bottom: 1px solid #222; padding-bottom: 8px; }
-        
-        input { 
-            width: 100%; padding: 14px; margin-bottom: 10px; background: rgba(255,255,255,0.05); 
-            border: 1px solid #333; color: white; border-radius: 10px; outline: none;
+        .btn-checkout { background: #0071e3; color: white; border: none; width: 100%; padding: 12px; border-radius: 10px; cursor: pointer; font-size: 14px; }
+        .hidden { display: none !important; }
+
+        @media (max-width: 600px) {
+            .footer-copy { flex-direction: column; gap: 10px; }
+            .container { padding: 0 20px 60px; }
         }
-        .btn-checkout { background: var(--rojo-mrd); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; cursor: pointer; font-weight: 700; }
-        .hidden { display: none; }
     </style>
 </head>
 <body>
@@ -112,42 +171,56 @@
         <button class="cart-trigger" onclick="toggleCart()">Bolsa <span class="badge" id="count">0</span></button>
     </nav>
 
-    <h2 class="main-title">MRD Store</h2>
+    <h2 class="main-title">Tienda MRD.</h2>
+
+    <main class="container" id="product-grid"></main>
+
+    <footer>
+        <div class="footer-compact">
+            <div class="footer-links">
+                <span>Gorras</span>
+                <span>T-Shirts</span>
+                <span>Soporte</span>
+                <span>Privacidad</span>
+                <span>Términos</span>
+            </div>
+            <div class="footer-copy">
+                <div>Copyright © 2026 MRD Store.</div>
+                <div style="color: #424245;">Santiago, República Dominicana</div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="lightbox" onclick="closeImage()" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 20000; display: none; align-items: center; justify-content: center;">
+        <img id="lightbox-img" src="" style="max-width: 90%; max-height: 80%; border-radius: 10px;">
+    </div>
 
     <div id="overlay" onclick="toggleCart()"></div>
 
     <aside id="cart-panel">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
-            <h2 style="font-size: 22px;">Tu Bolsa</h2>
-            <span onclick="toggleCart()" style="cursor:pointer; opacity:0.5">Cerrar</span>
+            <h2 style="font-size: 20px; font-weight:600;">Tu Bolsa</h2>
+            <span onclick="toggleCart()" style="cursor:pointer; font-size:24px;">&times;</span>
         </div>
-
         <div id="view-1">
             <div id="items-list"></div>
-            <div id="cart-footer" class="hidden" style="margin-top: 20px; border-top: 1px solid #222; padding-top: 15px;">
-                <p style="display: flex; justify-content: space-between; font-size: 18px; margin-bottom: 20px;">
-                    Total: <span id="total-price" style="font-weight:800; color:var(--rojo-mrd)">$0</span>
+            <div id="cart-footer" class="hidden">
+                <p style="display: flex; justify-content: space-between; margin: 20px 0; border-top: 1px solid #333; padding-top: 15px;">
+                    Total: <span id="total-price" style="font-weight:600; color:#fff;">$0</span>
                 </p>
-                <button class="btn-checkout" onclick="goToCheckout()">Continuar al pago</button>
-                <p onclick="vaciar()" style="text-align:center; margin-top:15px; font-size:12px; opacity:0.4; cursor:pointer;">Vaciar bolsa</p>
+                <button class="btn-checkout" onclick="goToCheckout()">Continuar</button>
             </div>
-            <div id="empty-msg" style="text-align:center; margin-top:50px; opacity:0.3;">Tu bolsa está vacía</div>
+            <div id="empty-msg" style="text-align:center; color:#6e6e73; margin-top:40px;">Bolsa vacía.</div>
         </div>
-
         <div id="view-2" class="hidden">
-            <p style="margin-bottom:20px; font-size:14px; color:var(--texto-secundario)">Datos de envío:</p>
-            <input type="text" id="u_name" placeholder="Nombre completo">
-            <input type="text" id="u_addr" placeholder="Dirección de entrega">
-            <input type="tel" id="u_tel" placeholder="WhatsApp / Teléfono">
-            <button id="final-btn" class="btn-checkout" style="margin-top:10px;" onclick="finalizar()">Confirmar Pedido</button>
-            <p onclick="backToItems()" style="text-align:center; margin-top:20px; font-size:12px; cursor:pointer; opacity:0.6">← Volver a la bolsa</p>
+            <input type="text" id="u_name" placeholder="Nombre" style="width:100%; padding:12px; margin-bottom:10px; background:#1c1c1e; border:1px solid #333; color:#fff; border-radius:8px;">
+            <input type="text" id="u_addr" placeholder="Dirección" style="width:100%; padding:12px; margin-bottom:10px; background:#1c1c1e; border:1px solid #333; color:#fff; border-radius:8px;">
+            <input type="tel" id="u_tel" placeholder="WhatsApp" style="width:100%; padding:12px; margin-bottom:20px; background:#1c1c1e; border:1px solid #333; color:#fff; border-radius:8px;">
+            <button id="final-btn" class="btn-checkout" onclick="finalizar()">Confirmar</button>
         </div>
     </aside>
 
-    <main class="container" id="product-grid"></main>
-
     <script>
-        // Inicializar EmailJS con tu Public Key
         emailjs.init("FTKOePl9p5Jhd8ycX");
 
         const db = [
@@ -164,28 +237,40 @@
             db.forEach(p => {
                 grid.innerHTML += `
                     <div class="product-card">
-                        <div class="gallery"><img src="${p.img}" alt="${p.name}"></div>
+                        <div class="gallery" onclick="openImage('${p.img}')"><img src="${p.img}" alt="${p.name}"></div>
                         <div class="info">
                             <h3>${p.name}</h3>
-                            <p class="price">Edición Elite <span>$${p.price}</span></p>
-                            <button class="btn-add" onclick="add(${p.id})">Añadir a la bolsa</button>
+                            <div class="price">
+                                <span class="currency">RD$</span><span class="amount">${p.price.toLocaleString()}</span><span class="decimal">.00</span>
+                            </div>
+                            <button class="btn-add" onclick="add(${p.id})">Añadir</button>
                         </div>
                     </div>
                 `;
             });
         }
 
+        function openImage(url) {
+            document.getElementById('lightbox-img').src = url;
+            document.getElementById('lightbox').style.display = 'flex';
+        }
+
+        function closeImage() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+
         function toggleCart() {
-            document.getElementById('cart-panel').classList.toggle('active');
+            const panel = document.getElementById('cart-panel');
             const overlay = document.getElementById('overlay');
-            overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
+            const isActive = panel.classList.toggle('active');
+            overlay.style.display = isActive ? 'block' : 'none';
         }
 
         function add(id) {
             const p = db.find(x => x.id === id);
             cart.push(p);
             updateCart();
-            if(!document.getElementById('cart-panel').classList.contains('active')) toggleCart();
+            toggleCart();
         }
 
         function updateCart() {
@@ -194,66 +279,34 @@
             const empty = document.getElementById('empty-msg');
             list.innerHTML = "";
             let total = 0;
-
-            cart.forEach((item, index) => {
+            cart.forEach(item => {
                 total += item.price;
-                list.innerHTML += `
-                    <div class="cart-item">
-                        <span>${item.name}</span>
-                        <b>$${item.price}</b>
-                    </div>`;
+                list.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px;"><span>${item.name}</span><b>$${item.price}</b></div>`;
             });
-
             document.getElementById('count').innerText = cart.length;
-            document.getElementById('total-price').innerText = "$" + total;
-            
-            if(cart.length > 0) {
-                footer.classList.remove('hidden');
-                empty.classList.add('hidden');
-            } else {
-                footer.classList.add('hidden');
-                empty.classList.remove('hidden');
-            }
+            document.getElementById('total-price').innerText = "RD$" + total.toLocaleString();
+            if(cart.length > 0) { footer.classList.remove('hidden'); empty.classList.add('hidden'); }
+            else { footer.classList.add('hidden'); empty.classList.remove('hidden'); }
         }
 
-        function vaciar() { cart = []; updateCart(); }
         function goToCheckout() { document.getElementById('view-1').classList.add('hidden'); document.getElementById('view-2').classList.remove('hidden'); }
         function backToItems() { document.getElementById('view-1').classList.remove('hidden'); document.getElementById('view-2').classList.add('hidden'); }
 
         function finalizar() {
-            const name = document.getElementById('u_name').value;
-            const addr = document.getElementById('u_addr').value;
-            const tel = document.getElementById('u_tel').value;
+            const n = document.getElementById('u_name').value;
+            const a = document.getElementById('u_addr').value;
+            const t = document.getElementById('u_tel').value;
+            if(!n || !a || !t) return alert("Completa tus datos.");
             const btn = document.getElementById('final-btn');
+            btn.innerText = "Enviando..."; btn.disabled = true;
+            
+            const params = { nombre: n, direccion: a, telefono: t, productos: cart.map(i => i.name).join(", "), total: document.getElementById('total-price').innerText };
 
-            if(!name || !addr || !tel) return alert("Por favor completa todos los campos.");
-
-            btn.innerText = "PROCESANDO...";
-            btn.disabled = true;
-
-            const params = {
-                nombre: name,
-                direccion: addr,
-                telefono: tel,
-                productos: cart.map(i => i.name).join(", "),
-                total: document.getElementById('total-price').innerText
-            };
-
-            emailjs.send("service_20iosku", "template_65ewyu8", params)
-                .then(() => {
-                    alert("¡Pedido recibido! Nos pondremos en contacto contigo pronto.");
-                    cart = [];
-                    updateCart();
-                    toggleCart();
-                    backToItems();
-                    btn.disabled = false;
-                    btn.innerText = "Confirmar Pedido";
-                })
-                .catch((err) => {
-                    alert("Error al enviar el pedido. Intenta de nuevo.");
-                    btn.disabled = false;
-                    btn.innerText = "Confirmar Pedido";
-                });
+            emailjs.send("service_20iosku", "template_65ewyu8", params).then(() => {
+                alert("✅ Pedido enviado.");
+                cart = []; updateCart(); toggleCart(); backToItems();
+                btn.disabled = false; btn.innerText = "Confirmar";
+            });
         }
 
         render();
